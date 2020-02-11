@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="../src/jquery.jqplot.js"></script>
+<script type="text/javascript" src="jquery-ui/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="../src/plugins/jqplot.canvasTextRenderer.js"></script>
+<script type="text/javascript" src="../src/plugins/jqplot.canvasAxisLabelRenderer.js"></script>
+<link rel="stylesheet" type="text/css" href="../src/jquery.jqplot.css" />
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/themes/smoothness/jquery-ui.css" />
+
+	<script>
+	$(document).ready(function(){
+		 
+	    var labels = ["Rice", "Bread and other cereals", "Fish and seafood", "Fruits and vegetables", "Other food products", 
+	        "Catering services", "Non-alcoholic beverages", "Alcoholic beverages", "Tobacco and narcotics", "Clothing and footwear", 
+	        "Rentals (actual or imputed) and maintenance and repair of the dwelling", "Water supply and miscellaneous services related to the dwelling", 
+	        "Electricity gas and other fuels", "Furnishing household equipment and routine household maintenance", "Health", "Transport", 
+	        "Communication", "Recreation and culture", "Education", "Personal care", "Other miscellaneous goods and services", 
+	        "Food and non-alcoholic beverages", "Non food"]
+	    var ticks = [[1, "v01"], [2, "v02"], [3, "v03"], [4, "v04"], [5, "v05"],
+	      [6, "v06"], [7, "v07"], [8, "v08"], [9, "v09"], [10, "v10"],
+	      [11, "v11"], [12, "v12"], [13, "v13"], [14, "v14"], [15, "v15"],
+	      [16, "v16"], [17, "v17"], [18, "v18"], [19, "v19"], [20, "v20"]];    // make the plot
+	     
+	    plot1 = $.jqplot('chart1', data, {
+	        title: 'Area Plot',
+	        stackSeries: true,
+	        seriesDefaults: {
+	            showMarker: false,
+	            fill: true,
+	            fillAndStroke: true
+	        },
+	        legend: {
+	            show: true,
+	            placement: 'outsideGrid',
+	            labels: labels,
+	            location: 'ne',
+	            rowSpacing: '0px'
+	        },
+	        axesDefaults: {
+	            labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+	        },
+	        axes: {
+	            xaxis: {
+	                pad: 0,
+	                ticks: ticks,
+	                label: 'Population Vingtile',
+	                tickOptions: {
+	                    showGridline: false
+	                }
+	            },
+	            yaxis: {
+	                min: 0,
+	                max: 100,
+	                label: 'Share of Item in Total Expenditure (%)',
+	                tickOptions: {
+	                  showGridline: false,
+	                  suffix: '%'
+	                }
+	            }
+	        },
+	        grid: {
+	            drawBorder: false,
+	            shadow: false,
+	            // background: 'rgba(0,0,0,0)'  works to make transparent.
+	            background: 'white'
+	        }
+	    });
+	 
+	    // add a date at the bottom.
+	 
+	    var d = new $.jsDate();
+	    $('div.jqplot-datestamp').html('Generated on '+d.strftime('%v'));
+	 
+	    // make it resizable.
+	     
+	    $("div.chart-container").resizable({delay:20});
+	 
+	    $('div.chart-container').bind('resize', function(event, ui) {
+	        plot1.replot();
+	    });
+	 
+	    $('#chart1').bind('jqplotDataHighlight', function(ev, seriesIndex, pointIndex, data) {
+	        var idx = 21 - seriesIndex
+	        $('tr.jqplot-table-legend').removeClass('legend-row-highlighted');  
+	        $('tr.jqplot-table-legend').children('.jqplot-table-legend-label').removeClass('legend-text-highlighted');
+	        $('tr.jqplot-table-legend').eq(idx).addClass('legend-row-highlighted'); 
+	        $('tr.jqplot-table-legend').eq(idx).children('.jqplot-table-legend-label').addClass('legend-text-highlighted'); 
+	    });
+	 
+	    $('#chart1').bind('jqplotDataUnhighlight', function(ev, seriesIndex, pointIndex, data) {
+	        $('tr.jqplot-table-legend').removeClass('legend-row-highlighted');  
+	        $('tr.jqplot-table-legend').children('.jqplot-table-legend-label').removeClass('legend-text-highlighted');
+	    });
+	});
+	</script>
+	
+</body>
+</html>

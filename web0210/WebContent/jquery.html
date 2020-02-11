@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jquery</title>
+</head>
+<body>
+	<div id="disp"></div>
+	<!-- jquery 링크 설정 -->
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> -->
+	
+	<script src = './js/jquery.js'></script>
+	
+	<!-- 스크립트 jquery 사용 가능 -->
+	<script>
+		//javascript 코드를 직접 사용하는 것보다 간결
+		$.ajax({
+			url:'data.json',
+			dataType:'json',
+			success:function(data){
+			//매개변수로 전달된 data에는 파싱한 결과가 저장
+				alert(data);
+			}
+		});
+	
+	</script>
+</body>
+</html>
